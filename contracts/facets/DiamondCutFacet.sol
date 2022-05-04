@@ -55,7 +55,9 @@ contract DiamondCutFacet is IDiamondCut {
             // "selectorCount >> 3" is a gas efficient division by 8 "selectorCount / 8"
             ds.selectorSlots[selectorCount >> 3] = selectorSlot;
         }
-        emit DiamondCut(_diamondCut, _init, _calldata);
+        for (uint256 facetIndex; facetIndex < _diamondCut.length; facetIndex++) {
+            emit DiamondCut(_diamondCut[facetIndex], _init, _calldata);
+        }
         LibDiamond.initializeDiamondCut(_init, _calldata);
     }
 }
